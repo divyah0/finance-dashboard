@@ -61,7 +61,7 @@ This project is a simple and interactive Finance Dashboard built using HTML, CSS
 
 ## 🌐 Live Demo
 
-(Add your Netlify link here)
+(https://sparkly-chimera-a44cc4.netlify.app/)
 
 ---
 
