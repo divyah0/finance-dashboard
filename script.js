@@ -7,7 +7,7 @@ let transactions = JSON.parse(localStorage.getItem("transactions")) || [
 
 let trendChart, categoryChart;
 
-// Role switch
+// Role change
 document.getElementById("roleSelect").addEventListener("change", (e) => {
   role = e.target.value;
 
@@ -20,7 +20,12 @@ document.getElementById("roleSelect").addEventListener("change", (e) => {
   init();
 });
 
-// Get balance
+// Dark mode
+function toggleTheme() {
+  document.body.classList.toggle("dark");
+}
+
+// Balance
 function getBalance() {
   let income = 0, expense = 0;
 
@@ -32,17 +37,24 @@ function getBalance() {
   return income - expense;
 }
 
-// Add transaction (FIXED)
-function addTransaction() {
-  const amount = Number(prompt("Enter amount:"));
-  const category = prompt("Enter category:");
-  const type = prompt("income/expense");
+// Show form
+function showForm() {
+  document.getElementById("formBox").style.display = "block";
+}
 
-  if (!amount || !category || !type) return;
+// Save transaction
+function saveTransaction() {
+  const amount = Number(document.getElementById("amount").value);
+  const category = document.getElementById("category").value;
+  const type = document.getElementById("type").value;
 
-  // ❗ VALIDATION
+  if (!amount || !category) {
+    alert("Enter all fields");
+    return;
+  }
+
   if (type === "expense" && amount > getBalance()) {
-    alert("⚠️ Insufficient balance! Cannot add this expense.");
+    alert("Insufficient balance!");
     return;
   }
 
@@ -54,6 +66,9 @@ function addTransaction() {
   });
 
   localStorage.setItem("transactions", JSON.stringify(transactions));
+
+  document.getElementById("formBox").style.display = "none";
+
   init();
 }
 
@@ -70,7 +85,7 @@ function renderTransactions(data) {
   table.innerHTML = "";
 
   if (data.length === 0) {
-    table.innerHTML = "<tr><td colspan='5'>No Data</td></tr>";
+    table.innerHTML = "<tr><td colspan='5'>No transactions found</td></tr>";
     return;
   }
 
@@ -102,23 +117,28 @@ function calculateSummary() {
 
 // Insights
 function renderInsights() {
+  let income = 0, expense = 0;
   let map = {};
 
   transactions.forEach(t => {
-    if (t.type === "expense") {
+    if (t.type === "income") income += t.amount;
+    else {
+      expense += t.amount;
       map[t.category] = (map[t.category] || 0) + t.amount;
     }
   });
 
-  if (Object.keys(map).length === 0) {
-    document.getElementById("insightsText").innerText = "No Data";
+  if (transactions.length === 0) {
+    document.getElementById("insightsText").innerText = "No data available";
     return;
   }
 
-  let max = Object.keys(map).reduce((a, b) => map[a] > map[b] ? a : b);
+  let maxCategory = Object.keys(map).length
+    ? Object.keys(map).reduce((a, b) => map[a] > map[b] ? a : b)
+    : "N/A";
 
   document.getElementById("insightsText").innerText =
-    `Highest spending category: ${max}`;
+    `Total Income: ₹${income}, Total Expense: ₹${expense}. Highest spending on: ${maxCategory}`;
 }
 
 // Search

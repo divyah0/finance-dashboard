@@ -55,9 +55,9 @@ canvas {
   border-radius: 10px;
 }
 
-input {
+input, select {
   padding: 10px;
-  margin-bottom: 10px;
+  margin: 5px;
 }
 
 table {
@@ -84,4 +84,24 @@ button {
   background: white;
   padding: 20px;
   border-radius: 10px;
+}
+
+/* Form */
+#formBox {
+  display: none;
+  margin-top: 10px;
+}
+
+/* Dark Mode */
+.dark {
+  background: #0f172a;
+  color: white;
+}
+
+.dark .card,
+.dark .chart-box,
+.dark .transactions,
+.dark .insights {
+  background: #1e293b;
+  color: white;
 }
