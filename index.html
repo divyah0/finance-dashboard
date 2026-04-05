@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Finance Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+
+<header>
+  <h1>💰 Finance Dashboard</h1>
+
+  <select id="roleSelect">
+    <option value="viewer">Viewer</option>
+    <option value="admin">Admin</option>
+  </select>
+</header>
+
+<section class="cards">
+  <div class="card" id="balanceCard">Balance: ₹0</div>
+  <div class="card" id="incomeCard">Income: ₹0</div>
+  <div class="card" id="expenseCard">Expenses: ₹0</div>
+</section>
+
+<section class="chart-container">
+  <div class="chart-box">
+    <h3>Monthly Trend</h3>
+    <canvas id="trendChart"></canvas>
+  </div>
+
+  <div class="chart-box">
+    <h3>Category Breakdown</h3>
+    <canvas id="categoryChart"></canvas>
+  </div>
+</section>
+
+<section class="transactions">
+  <h2>Transactions</h2>
+
+  <input type="text" id="search" placeholder="Search category...">
+
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Amount</th>
+        <th>Category</th>
+        <th>Type</th>
+        <th id="actionHeader" style="display:none;">Action</th>
+      </tr>
+    </thead>
+    <tbody id="transactionTable"></tbody>
+  </table>
+
+  <div id="adminActions" style="display:none;">
+    <button onclick="addTransaction()">+ Add Transaction</button>
+  </div>
+</section>
+
+<section class="insights">
+  <h2>Insights</h2>
+  <p id="insightsText"></p>
+</section>
+
+</body>
+</html>
